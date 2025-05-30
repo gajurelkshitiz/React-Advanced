@@ -1,0 +1,19 @@
+main{
+    background-color: beige;
+}
+
+.title{
+    color:blueviolet
+}
+
+.body{
+    color:brown
+}
+
+.show{
+    background-color:green
+}
+
+.hide{
+    background-color: orange;
+}
