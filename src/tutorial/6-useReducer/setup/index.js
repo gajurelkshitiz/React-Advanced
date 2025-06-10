@@ -1,11 +1,9 @@
 import React, { useState, useReducer } from 'react';
 import Modal from './Modal';
 import { data } from '../../../data';
+
 // reducer function
-
-const reducer = (state, action) => {
-
-}
+import {reducer} from "./reducer"
 
 const defaultState = {
   people: [],
@@ -19,17 +17,26 @@ const Index = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (name){
-      
+    if(name){
+      const newPeople = {id: new Date().getTime().toString(), name}
+      dispatch({ type:"ADD_PEOPLE", payload:newPeople })
+      setName('')
     }
     else{
-      
+      dispatch({ type:"NO_VALUE" })
     }
+  };
+
+  const closeModal = () => {
+    dispatch({ type:"CLOSE_MODAL" })
+  };
+  const removePeople = (id) => {
+    dispatch({type:"REMOVE_PEOPLE", payload:id})
   };
 
   return ( 
     <>
-      {state.isModalOpen && <Modal modalContent={state.modalContent} />}
+      {state.isModalOpen && <Modal modalContent={state.modalContent} closeModal={closeModal} />}
       <form className='form' onSubmit={handleSubmit}>
         <div>
           <input 
@@ -43,8 +50,10 @@ const Index = () => {
 
       {state.people.map((person) => {
         return (
-          <div key={person.id}>
+          <div key={person.id} className='item'>
             <h4> {person.name} </h4>
+            <button 
+              onClick={() => removePeople(person.id)}> clear </button>
           </div>
         )
       })}
